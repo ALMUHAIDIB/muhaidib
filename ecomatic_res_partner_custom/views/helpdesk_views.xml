@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="helpdesk_action_ticket_new" model="ir.actions.act_window">
+        <field name="name">Ticket</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain"></field>
+        <field name="context"></field>
+    </record>
+        <record id="partner_action_main_my" model="ir.actions.act_window">
+        <field name="name">Partners</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+            <record id="product_action_main_tree" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="master_date_menu_main" name="Master Date"
+        sequence="10" parent="helpdesk.menu_helpdesk_root"/>
+
+    <menuitem id="partner_menu_my" name="Partners" action="partner_action_main_my"
+        sequence="10" parent="master_date_menu_main"/>
+
+    <menuitem id="product_menu_all" name="All Products" action="product_action_main_tree"
+        sequence="20" parent="master_date_menu_main"/>
+</odoo>

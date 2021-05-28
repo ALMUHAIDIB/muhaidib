@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="hr_contract_form_inh" model="ir.ui.view">
+            <field name="name">hr.contract.form.inh</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook//page[1]//field[@name='resource_calendar_id']" position="after">
+                    <field name="leaves"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record  id="ir_cron_scheduler_leave" model="ir.cron">
+                    <field name="name">leaves Emp</field>
+                    <field name="model_id" ref="model_hr_contract"/>
+                    <field name="state">code</field>
+                    <field name="code">model.leave()</field>
+                    <field eval="True" name="active" />
+                    <field name="user_id" ref="base.user_root" />
+                    <field name="interval_number">1</field>
+                    <field name="interval_type">days</field>
+                    <field name="numbercall">-1</field>
+
+        </record>
+
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="hr_leave_allocation_view_form_manager_inh" model="ir.ui.view">
+            <field name="name">hr.leave.allocation.view.form.manager.inh</field>
+            <field name="model">hr.leave.allocation</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='holiday_status_id']" position="after">
+                    <field name="new_data" invisible="True"/>
+                    <field name="annual" invisible="True"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+
+            </field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <!--<record id="hr_leave_form_inh" model="ir.ui.view">-->
+            <!--<field name="name">hr.leave.form.inh</field>-->
+            <!--<field name="model">hr.leave</field>-->
+            <!--<field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                <!--<xpath expr="//field[@name='number_of_days']" position="attributes">-->
+                    <!--<attribute name="invisible">0</attribute>-->
+                    <!--&lt;!&ndash; Add your fields or attributes here &ndash;&gt;-->
+                <!--</xpath>-->
+
+            <!--</field>-->
+        <!--</record>-->
+
+
+    </data>
+</odoo>

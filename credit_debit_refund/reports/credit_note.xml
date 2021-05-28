@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="credit_note_invoice_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-family:KacstOne;font-size: 14;">
+                            <br/>
+                            <br/>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <!--<small>بيانات العميل</small>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <span t-if="o.parent_partner_id">
+                                            <td style="text-align: right;white-space: nowrap;">
+                                                <span t-field="o.parent_partner_id.name"/>
+                                            </td>
+                                        </span>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;white-space: nowrap;">
+                                            <span t-field="o.partner_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;white-space: nowrap;">
+                                            <span t-field="o.partner_id.street"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <span t-if="o.parent_partner_id.vat">
+                                            <td style="text-align: right;white-space: nowrap;">
+                                                <span t-field="o.parent_partner_id.vat"/>
+                                                <span>رقم التسجيل القيمة المضافة</span>
+                                            </td>
+                                        </span>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <div>
+                                <table style="width:50%;float: right;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: right;" colspan="4">
+                                                <span t-field="o.date_invoice"/>
+                                            </td>
+                                            <td style="text-align: right;">التاريخ</td>
+                                        </tr>
+                                        <tr style="text-align: right;">
+                                            <td colspan="4">
+
+                                                <span t-if="o.credit">
+                                                    <span t-field="o.credit_invoice_id.number"/>
+                                                </span>
+                                                <span t-if="o.type == 'out_refund'">
+                                                    <span t-field="o.origin"/>
+                                                </span>
+
+
+                                            </td>
+                                            <td>رقم فاتورة المبيعات</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br></br>
+                            <br></br>
+                            <center style="margin-top:20px;">
+                                <div style="text-align: center;">
+                                    <strong>Credit Note</strong>
+                                </div>
+                                <strong>
+                                    <span t-field="o.number"/>
+                                    <span>أشعار ضريبى دائن رقم</span>
+                                </strong>
+
+                                <table style="margin-top:20px;width:100%;border: 2px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">الكود</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">اسم</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">الكمية</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">الوحدة</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">سعر</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">الخصم%</td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">اجمالي</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.invoice_line_ids" t-as="i">
+                                            <tr>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.product_id.default_code"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.name"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.quantity"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.uom_id"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.price_unit" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;i.currency_id&quot;}"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.discount"/>
+                                                </td>
+                                                <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                    <span t-field="i.price_subtotal" t-options='{"widget": "float", "precision": 2}' />
+                                                    <span t-field="o.currency_id.symbol"  />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td style="text-align: right;border:thin solid black;padding: 5px;" colspan="6">اجمالي
+                                            </td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                <t t-set="invoice_amount" t-value="0"/>
+                                                <t t-foreach="o.invoice_line_ids" t-as="x">
+                                                    <t t-set="invoice_amount" t-value="invoice_amount+(x.quantity*x.price_unit)"/>
+                                                </t>
+                                                <span t-esc="float(invoice_amount)" t-options='{"widget": "float", "precision": 2}' t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;border:thin solid black;padding: 5px;" colspan="6">الخصم
+                                            </td>
+                                            <td style="text-align: center;border:thin solid black;padding: 5px;">
+                                                <t t-set="value_discount" t-value="0"/>
+                                                <t t-foreach="o.invoice_line_ids" t-as="x">
+                                                    <t t-set="value_discount" t-value="value_discount+(x.quantity*x.price_unit*x.discount/100)"/>
+                                                </t>
+                                                <span t-esc="float(value_discount)" t-options='{"widget": "float", "precision": 2}' t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;border:thin solid black;padding: 5px;" colspan="6">
+                                                <p>الصافي قبل الضريبة</p>
+                                            </td>
+                                            <td style="text-align: center;border:thin solid black">
+                                                <span t-field="o.amount_untaxed" t-options='{"widget": "float", "precision": 2}'/>
+                                                <span t-field="o.currency_id.symbol"  />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;border:thin solid black;padding: 5px;" colspan="6">
+                                                <p>ضريبة القيمة المضافة</p>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <span t-field="o.amount_tax"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;border:thin solid black;padding: 5px;" colspan="6">
+                                                <span>الاجمالى بعد الضريبة فقط</span>
+                                                <span t-esc="o.amount_to_text(o.amount_total)" />
+                                                <!--<span>ريال سعودي</span>-->
+                                            </td>
+                                            <td style="text-align: center;border:thin solid black">
+                                                <span t-field="o.amount_total" t-options='{"widget": "float", "precision": 2}' />
+                                                <span t-field="o.currency_id.symbol"  />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </center>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+                id="credit_note_invoice_report"
+                model="account.invoice"
+                string="Credit Note Invoice"
+                report_type="qweb-pdf"
+                name="credit_debit_refund.credit_note_invoice_template"
+                file="credit_debit_refund.credit_note_invoice_template"
+                menu="True"
+        />
+    </data>
+</odoo>

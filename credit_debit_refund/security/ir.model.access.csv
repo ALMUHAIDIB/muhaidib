@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_credit_debit_refund_credit_debit_refund,credit_debit_refund.credit_debit_refund,account.model_account_invoice_line,,1,1,1,1

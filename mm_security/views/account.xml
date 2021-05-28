@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_invoice_cancel_button_inherit" model="ir.ui.view">
+            <field name="name">cancel button security</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice_cancel']" position="replace">
+                    <button name="action_invoice_cancel" type="object" states="draft,open,in_payment,paid" string="Cancel" groups="mm_security.group_account_canceler"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_supplier_cancel_button_inherit" model="ir.ui.view">
+            <field name="name">cancel button security</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice_cancel']" position="replace">
+                    <button name="action_invoice_cancel" type="object" states="draft,open,in_payment,paid" string="Cancel" groups="mm_security.group_account_canceler"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="payment_cancel_form_security_inherit" model="ir.ui.view">
+            <field name="name">payment.cancel.security.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='cancel']" position="replace">
+                    <button name="cancel" attrs="{'invisible': [('state', 'in', ['draft','cancelled'])]}" string="Cancel" type="object" groups="mm_security.group_account_canceler"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

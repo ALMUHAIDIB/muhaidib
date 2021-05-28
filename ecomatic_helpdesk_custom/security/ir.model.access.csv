@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_ticket,ecomatic_employee_ticket,model_employee_ticket,,1,1,1,1
+access_employee_department,ecomatic_employee_department,model_employee_department,,1,1,1,1
+helpdesk.access_helpdesk_stage_manager,helpdesk.stage.manager,helpdesk.model_helpdesk_stage,ecomatic_helpdesk_custom.group_stage_ticket,1,1,1,1

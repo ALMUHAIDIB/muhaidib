@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_saudi_hr_end_service_saudi_hr_end_service,saudi_hr_end_service.saudi_hr_end_service,model_saudi_hr_end_service_saudi_hr_end_service,,1,0,0,0

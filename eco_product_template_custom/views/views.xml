@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+      <record id="product_template_custom" model="ir.ui.view">
+        <field name="name">product.template.custom</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook/page[2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[3]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[4]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='general_information']" position="inside">
+                <group string="Terms and Conditions">
+                    <field name="terms_conditions" nolabel="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+<!--            <xpath expr="//group[@name='group_standard_price']/label[2]" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+        </field>
+    </record>
+      <record id="product_template_tax_custom" model="ir.ui.view">
+          <field name="name">product.template.tax.custom</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="account.product_template_form_view"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='taxes_id']" position="replace">
+                  <field name="taxes_id" widget="many2many_tags" invisible="1"/>
+              </xpath>
+
+          </field>
+      </record>
+      <record id="product_template_custom_2" model="ir.ui.view">
+          <field name="name">product.template.custom.2</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_only_form_view"/>
+          <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='default_code']" position="replace">
+                  
+              </xpath>
+
+              <xpath expr="//field[@name='categ_id']" position="replace">
+                  <field name="brand_id" required="1"/>
+                  <field name="style_id" required="1"/>
+                  <field name="type_id" required="1"/>
+                  <field name="power_supply_id" required="1"/>
+                  <field name="color_id" required="1"/>
+                  <field name="material_id" required="1"/>
+                  <field name="default_code" required="1"/>
+                  <field name="size"/>
+                  <field name="product_dimension"/>
+                  <field name="cut_off_dimension"/>
+              </xpath>
+              <xpath expr="//field[@name='list_price']" position="after">
+                  <field name="promotion_percentage"/>
+                  <field name="promotion_price"/>
+                  <field name="warranty_years"/>
+              </xpath>
+
+
+
+          </field>
+      </record>
+  </data>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+          <record id="group_more_partner"  model="res.groups">
+            <field name="name">More Partner</field>
+          </record>
+
+    </data>
+</odoo>

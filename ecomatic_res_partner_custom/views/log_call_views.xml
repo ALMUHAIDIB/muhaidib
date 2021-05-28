@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record id="log_call_tree" model="ir.ui.view">
+        <field name="name">Log Call</field>
+        <field name="model">log.call</field>
+        <field name="arch" type="xml">
+            <tree string="Log Call">
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="call_topic"/>
+                <field name="call_description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="log_call_action" model="ir.actions.act_window">
+            <field name="name">Log Call</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">log.call</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Create a new Log CAll
+                </p>
+            </field>
+        </record>
+
+
+</odoo>

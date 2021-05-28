@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+  <data>
+    <act_window name="Debit Note" id="act_debit_note"
+                res_model="debit.note"
+                view_mode="form"
+                target="new"/>
+
+
+    <record id="debit_note_view" model="ir.ui.view">
+      <field name="name">Debit Note</field>
+      <field name="model">debit.note</field>
+      <field name="arch" type="xml">
+        <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <label for="discount_amount"/>
+                                <div name="discount_amount_div" class="o_row">
+                                    <field name="discount_amount"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}"/>
+                                </div>
+                            <field name="discount_product_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="date_debit_note"/>
+                        </group>
+
+                    </group>
+                    <footer>
+                        <button string="Add Debit Note" name="confirm_debit_note" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

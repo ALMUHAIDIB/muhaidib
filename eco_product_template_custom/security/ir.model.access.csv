@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_brand,access.product.brand,model_product_brand,,1,1,1,1
+access_product_style,access.product.style,model_product_style,,1,1,1,1
+access_product_type,access.product.type,model_product_type,,1,1,1,1
+access_product_power_supply,access.product.power.supply,model_product_power_supply,,1,1,1,1
+access_product_color,access.product.color,model_product_color,,1,1,1,1
+access_product_material,access.product.material,model_product_material,,1,1,1,1

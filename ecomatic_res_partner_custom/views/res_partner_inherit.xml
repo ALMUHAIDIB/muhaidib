@@ -1,0 +1,255 @@
+<odoo>
+    <data>
+        <record id="res_partner_inhiter" model="ir.ui.view">
+            <field name="name">res.partner.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="id" invisible="1"/>
+                    <field name="customer_code" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="res_partner_inherits" model="ir.ui.view">
+            <field name="name">res Partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='function']" position="after">
+
+                    <field name="extension_number" placeholder="extension number.."/>
+
+                    <field name="is_employee"/>
+                </xpath>
+
+
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="%(action_log_call_wizard)d"
+                                type="action" string="Log A Call`" class="btn-link"/>
+                        <!--                    <button name="create_ticket"-->
+                        <!--                                                type="object" string="Create Ticket" class="btn-link"/>-->
+                        <button string="New Ticket" name="%(ecomatic_res_partner_custom.helpdesk_action_ticket_new)d"
+                                type="action"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('active', '=', False)]}"
+                                context="{'search_default_partner_id': active_id,
+                                  'default_partner_id': active_id,
+                                  'default_partner_email': email,
+                                  'default_name': 'new' ,
+                                  'default_rel_ids': rel_ids,
+                                  'default_rel_waranty_ids': rel_waranty_ids,
+
+                                  }"
+                        />
+                        <!--                        <field name="partner_id" invisible="1"/>-->
+                    </header>
+
+                </xpath>
+
+                <xpath expr="//field[@name='city']" position="replace">
+                    <field required="1" name="city" placeholder="Area" class="o_address_city"/>
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='zip']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <!--                <xpath expr="//field[@name='company_type']" position="replace">-->
+                <!--                    <field name="company_type" options="{'horizontal': true}" class="oe_edit_only" widget="radio"  groups="base.group_no_one"/>-->
+                <!--                </xpath>-->
+                <xpath expr="//field[@name='company_type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.act_res_partner_2_sale_order)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_partner_invoices']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <div name="button_box" position="inside">
+                    <button type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                            name="action_view_partner_log"
+                            context="{'default_partner_id': active_id}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <!--                                <field name="total_down_payment" widget='monetary' options="{'currency_field': 'currency_id'}"/>-->
+                            </span>
+                            <span class="o_stat_text">Call History</span>
+                        </div>
+                    </button>
+                    <!--                    <button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_partner_tickets"-->
+                    <!--                        context="{'default_partner_id': active_id}">-->
+                    <!--                        <div class="o_form_field o_stat_info">-->
+                    <!--                            <span class="o_stat_value">-->
+                    <!--&lt;!&ndash;                                <field name="total_down_payment" widget='monetary' options="{'currency_field': 'currency_id'}"/>&ndash;&gt;-->
+                    <!--                            </span>-->
+                    <!--                            <span class="o_stat_text">Tickets</span>-->
+                    <!--                        </div>-->
+                    <!--                    </button>-->
+                </div>
+                <xpath expr="//field[@name='street2']" position="after">
+                    <field name="landmark" placeholder="Land mark..." class="o_address_street"/>
+                </xpath>
+                <xpath expr="//field[@name='street2']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='street']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='zip']" position="attributes">
+                    <attribute name="placeholder">Prefix</attribute>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="replace">
+                    <field name="date_of_purse"/>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="customer_code"/>
+                    <field name="first_name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <!--                        <field name="open_domain" />-->
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="replace">
+                    <field name="state_id" class="o_address_state" placeholder="Governorate"
+                           options='{"no_open": True}'/>
+                </xpath>
+
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='email']" position="before">
+                    <!--                    <label for="phone" name="Phone"/>-->
+                    <field name="phone" widget="phone"/>
+                    <!--                    <label for="mobile" name="Phone"/>-->
+                    <field name="mobile" widget="phone"/>
+                    <!--                    <label for="mobile_2" name="Phone"/>-->
+                    <field name="mobile_2" widget="phone"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='category_id']" position="after">
+
+                    <!--                    <field name="mobile" widget="phone"/>-->
+                    <!--                    <newline/>-->
+                    <field name="about_us_id"/>
+                    <field name="vendor_id"/>
+                </xpath>
+                <xpath expr="//page[1]" position="attributes">
+                    <attribute name="groups">ecomatic_res_partner_custom.group_more_partner</attribute>
+                </xpath>
+                <xpath expr="//page[2]" position="attributes">
+                    <attribute name="groups">ecomatic_res_partner_custom.group_more_partner</attribute>
+                </xpath>
+                <xpath expr="//page[3]" position="attributes">
+                    <attribute name="groups">ecomatic_res_partner_custom.group_more_partner</attribute>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="groups">ecomatic_res_partner_custom.group_more_partner</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name='own_products' string="Own Products">
+                        <field name="id" invisible="1"/>
+                        <field name="customer_code" invisible="1"/>
+                        <field name="rel_ids" widget="many2many" nolabel="1" domain="[('partner_id', '=', id)]"
+                               context="{'default_partner_id': active_id}">
+                            <tree name="rel_tree" string="Rel Product Partner" editable="bottom">
+                                <!--                                        <field name="id"/>-->
+                                <field name="product_id"/>
+                                <field name="purchase_date"/>
+                                <field name="serial"/>
+                                <!--                                        <field name="start_date"/>-->
+                                <!--                                        <field name="end_date"/>-->
+                                <field name="product_dimensions"/>
+                                <field name="cut_off_dimensions"/>
+                                <field name="terms_conditions"/>
+                                <field name="power_supply"/>
+                                <field name="installation_p_s_"/>
+                                <field name="vendor_id"/>
+                            </tree>
+                            <form name="rel_form" string="Rel Product Partner">
+                                <group>
+
+                                    <field name="serial"/>
+                                    <field name="product_id"/>
+                                    <!--                                        <field name="customer_code"/>-->
+                                    <field name="partner_id" readonly="1"/>
+                                    <field name="purchase_date"/>
+                                    <!--                                        <field name="start_date"/>-->
+                                    <!--                                        <field name="end_date"/>-->
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page name='products_waranty' string="Products Waranty">
+                        <field name="rel_waranty_ids" widget="many2many" nolabel="1" domain="[('id', 'in', rel_ids)]"
+                               context="{'default_partner_id': active_id}" options="{'no_create': True}">
+                            <tree name="rel_tree" string="Rel Product Partner" editable="bottom">
+
+                                <!--                                    <field name="id"/>-->
+                                <field name="product_id" readonly="1"/>
+                                <field name="purchase_date" readonly="1"/>
+                                <field name="serial" string="Product Serial" readonly="1"/>
+                                <field name="serial_waranty" string="Waranty Serial"/>
+                                <!--                                    <field name="partner_id"/>-->
+                                <field name="installation_data"/>
+                                <field name="estimated_start"/>
+                                <!--                                    <field name="saturation_data"/>-->
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <!--                                    <field name="product_dimensions"/>-->
+                                <!--                                    <field name="cut_off_dimensions"/>-->
+                                <!--                                    <field name="terms_conditions"/>-->
+                                <!--                                    <field name="model_no"/>-->
+                            </tree>
+                            <form name="rel_form" string="Rel Product Partner">
+                                <group>
+                                    <field name="serial"/>
+                                    <field name="product_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="saturation_data"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page name='customer_review' string="Customer Attachment">
+                        <field name="description_customer_review"/>
+                        <field name="attachment_customer_review1"/>
+                        <field name="attachment_customer_review2"/>
+                        <field name="attachment_customer_review3"/>
+                        <field name="attachment_customer_review4"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

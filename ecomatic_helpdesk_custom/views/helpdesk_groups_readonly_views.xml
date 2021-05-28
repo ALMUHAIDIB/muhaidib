@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="helpdesk_ticket_view_form_group_customer_review_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_customer_review_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description_customer_review_more']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="helpdesk_ticket_view_form_group_ticket_device_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_ticket_device_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ticket_device_ids']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Inherit Form View to Modify it -->
+    <record id="helpdesk_ticket_view_form_group_employee_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_employee_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_ticket_id']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="helpdesk_ticket_view_form_group_assigned_to_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_assigned_to_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="helpdesk_ticket_view_form_group_ticket_type_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_ticket_type_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ticket_type_id']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+<!--    <record id="helpdesk_ticket_view_form_ggroup_is_warranty_ticket" model="ir.ui.view">-->
+<!--        <field name="name">helpdesk.ticket</field>-->
+<!--        <field name="model">helpdesk.ticket</field>-->
+<!--        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>-->
+<!--        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_is_warranty_ticket')])]"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='is_warranty']" position="attributes">-->
+<!--                <attribute name="readonly">0</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="helpdesk_ticket_view_form_group_customer_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_customer_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_view_form_group_customer_attachment_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_customer_attachment_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description_customer_review']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment_customer_review1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment_customer_review2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment_customer_review3']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="helpdesk_ticket_view_form_group_desc_visit_review_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_desc_visit_review_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description_visite1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment3']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment4']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment5']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_view_form_group_device_delivery_ticket" model="ir.ui.view">
+        <field name="name">helpdesk.ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="groups_id" eval="[(6,0,[ref('ecomatic_helpdesk_custom.group_device_delivery_ticket')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_delivery1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='number_delivery1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_delivery1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment_delivery1']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+
+            <!--                -->
+            <xpath expr="//field[@name='date_delivery2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='number_delivery2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description_delivery2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='attachment_delivery2']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+  <data>
+
+    <record id="account_invoice_form_inherited" model="ir.ui.view">
+        <field name="name">Vandor Bill Form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='date_due']" position="after">
+            <field name="is_landed_cost" string="Landed Cost"/>
+            <field name="purchase_order_id" string="Purchase Order"
+                   attrs="{'invisible': [('is_landed_cost', '=', False)],'required': [('is_landed_cost', '=', True)]}"/>
+                <field name="picking_ids" string="Pickings" widget="many2many_tags"
+                       attrs="{'invisible': [('is_landed_cost', '=', False)],'required': [('is_landed_cost', '=', True)]}"/>
+
+            </xpath>
+
+
+        </field>
+    </record>
+  </data>
+</odoo>

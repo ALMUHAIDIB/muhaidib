@@ -1,0 +1,80 @@
+<odoo>
+    <!--<data>-->
+
+    <!--<template id="search_template_partner">-->
+        <!--<div class="search_template_ir_filters">-->
+            <!--<label class="fa fa-copy" style="font-size:16px">Account Matching-->
+                <!--&lt;!&ndash;<input class="advantage_input" type="checkbox" name="options.get('account_matching')" t-att-checked="options.get('account_matching')"/>&ndash;&gt;-->
+                <!--<input class="dropdown-item js_account_report_bool_filter" type="checkbox" name="options.get('account_matching')" t-if="options.get('account_matching') != False" data-filter="account_matching"/>-->
+                <!--&lt;!&ndash;<div class="dropdown-menu o_filters_menu" role="menu">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('account_matching') != False" title="Account Matching" data-filter="account_matching">Account Matching</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</label>-->
+        <!--</div>-->
+    <!--</template>-->
+
+     <template id="account_reports.search_template_extra_options">
+        <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="fa fa-filter"/> Options:
+            <t t-if="options.get('account_matching') != None">
+                <t t-if="options['account_matching']">Account Matching</t>
+            </t>
+            <t t-if="options.get('cash_basis') != None">
+                <t t-if="options['cash_basis']">Cash Basis</t>
+                <t t-if="not options['cash_basis']">Accrual Basis</t>
+            </t>
+            <t t-if="options.get('all_entries') != None" groups="account.group_account_user">
+                <t t-if="options.get('cash_basis') != None">,</t>
+                <t t-if="options['all_entries']">With Draft Entries</t>
+                <t t-if="not options['all_entries']">Posted Entries Only</t>
+            </t>
+            <t t-if="options.get('unreconciled') != None">
+                <t t-if="options.get('all_entries') != None">,</t>
+                <t t-if="options['unreconciled']">Only Show Unreconciled Entries</t>
+            </t>
+        </a>
+        <div class="dropdown-menu o_filters_menu" role="menu">
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('account_matching') != None" title="Account Matching" data-filter="account_matching">Account Matching</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('cash_basis') != None" title="Cash Basis Method" data-filter="cash_basis" groups="account.group_account_user">Cash Basis Method</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('all_entries') != None" title="Include unposted entries" data-filter="all_entries" groups="account.group_account_user">Include Unposted Entries</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('hierarchy') != None" title="Hierarchy" data-filter="hierarchy">Hierarchy and Subtotals</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('unreconciled') != None" title="Unreconciled" data-filter="unreconciled">Only Show Unreconciled Entries</a>
+            <a role="menuitem" class="dropdown-item js_account_report_bool_filter" t-if="options.get('unfold_all') != None" title="Unfold" data-filter="unfold_all">Unfold All</a>
+        </div>
+    </template>
+
+    <template id="account_reports.search_template">
+        <!--<div class="btn-group-toggle">-->
+            <!--<t t-call="partner_ledger_customization.search_template_partner"/>-->
+        <!--</div>-->
+        <div class="btn-group o_dropdown o_account_reports_filter_date" t-if="options.get('date') != None">
+            <t t-call="account_reports.search_template_date_filter"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_date_cmp" t-if="options.get('comparison') != None">
+            <t t-call="account_reports.search_template_comparison"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_multi_company" t-if="options.get('multi_company') != None">
+            <t t-call="account_reports.search_template_multi_company"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_journals" t-if="options.get('journals') != None">
+            <t t-call="account_reports.search_template_journals"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_account_type" t-if="options.get('account_type') != None">
+            <t t-call="account_reports.search_template_account_type"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_analytic" t-if="options.get('analytic') != None or options.get('analytic_tags') != None">
+            <t t-call="account_reports.search_template_analytic"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_ir_filters" t-if="options.get('ir_filters') != None">
+            <t t-call="account_reports.search_template_ir_filters"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_partner" t-if="options.get('partner')">
+            <t t-call="account_reports.search_template_partner"/>
+        </div>
+        <div class="btn-group o_dropdown o_account_reports_filter_bool" t-if="options.get('cash_basis') != None or options.get('all_entries') != None or options.get('unfold_all') != None">
+            <t t-call="account_reports.search_template_extra_options"/>
+        </div>
+    </template>
+
+    <!--</data>-->
+</odoo>

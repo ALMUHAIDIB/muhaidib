@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+
+        <record id="rel_product_partner_tree" model="ir.ui.view">
+            <field name="name">Rel Product Partner</field>
+            <field name="model">rel.product.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+<!--                    <field name="id"/>-->
+                    <field name="name"/>
+                    <field name="purchase_date"/>
+                    <field name="serial"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+<!--                    <field name="installation_data"/>-->
+<!--                    <field name="estimated_start"/>-->
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+
+                </tree>
+            </field>
+        </record>
+
+                <record id="rel_product_partner_action" model="ir.actions.act_window">
+            <field name="name">Rel Product Partner</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rel.product.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="rel_product_partner_menu"
+                  name="Rel Product Partner"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="rel_product_partner_action"
+                  sequence="100"/>
+
+    </data>
+</odoo>

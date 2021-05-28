@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rel_product_partner,ecomatic_rel_product_partner,model_rel_product_partner,,1,1,1,1
+access_about_us,ecomatic_about_us,model_about_us,,1,1,1,1
+access_log_call,ecomatic_log_call,model_log_call,,1,1,1,1
+access_res_vendor,ecomatic_res_vendor,model_res_vendor,,1,1,1,1

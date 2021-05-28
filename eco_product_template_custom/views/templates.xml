@@ -1,0 +1,180 @@
+<odoo>
+    <data>
+        <record id="product_brand_form" model="ir.ui.view">
+            <field name="name">product.brand.form</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_brand_tree" model="ir.ui.view">
+            <field name="name">product.brand.tree</field>
+            <field name="model">product.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_brand_action" model="ir.actions.act_window">
+            <field name="name">Product Brand</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.brand</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="product_brand_menu"
+                  name="Product Brand"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="product_brand_action"
+                  sequence="20"/>
+
+        <!--        =============================-->
+
+        <record id="product_style_form" model="ir.ui.view">
+            <field name="name">product.style.form</field>
+            <field name="model">product.style</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_style_tree" model="ir.ui.view">
+            <field name="name">product.style.tree</field>
+            <field name="model">product.style</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_style_action" model="ir.actions.act_window">
+            <field name="name">Product Style</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.style</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="product_style_menu"
+                  name="Product Style"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="product_style_action"
+                  sequence="30"/>
+
+        <!--        ===============================-->
+        <record id="product_type_form" model="ir.ui.view">
+            <field name="name">product.type.form</field>
+            <field name="model">product.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_type_tree" model="ir.ui.view">
+            <field name="name">product.type.tree</field>
+            <field name="model">product.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_type_action" model="ir.actions.act_window">
+            <field name="name">Product Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="product_type_menu"
+                  name="Product Type"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="product_type_action"
+                  sequence="40"/>
+
+        <!--        ===============================-->
+        <record id="product_power_supply_form" model="ir.ui.view">
+            <field name="name">product.power.supply.form</field>
+            <field name="model">product.power.supply</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_power_supply_tree" model="ir.ui.view">
+            <field name="name">product.power.supply.tree</field>
+            <field name="model">product.power.supply</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_power_supply_action" model="ir.actions.act_window">
+            <field name="name">Product Power Supply</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.power.supply</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="product_power_supply_menu"
+                  name="Product Power Supply"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="product_power_supply_action"
+                  sequence="50"/>
+
+        <!--        ===============================-->
+        <record id="product_material_form" model="ir.ui.view">
+            <field name="name">product.material.form</field>
+            <field name="model">product.material</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="product_material_tree" model="ir.ui.view">
+            <field name="name">product.material.tree</field>
+            <field name="model">product.material</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_material_action" model="ir.actions.act_window">
+            <field name="name">Product Material</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.material</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="product_material_menu"
+                  name="Product Material"
+                  parent="helpdesk.helpdesk_menu_config"
+                  action="product_material_action"
+                  sequence="60"/>
+
+    </data>
+</odoo>

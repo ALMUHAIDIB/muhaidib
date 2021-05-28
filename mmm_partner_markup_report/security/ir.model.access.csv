@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mmm_partner_markup_report_mmm_partner_markup_report,mmm_partner_markup_report.mmm_partner_markup_report,model_mmm_partner_markup_report_mmm_partner_markup_report,,1,0,0,0

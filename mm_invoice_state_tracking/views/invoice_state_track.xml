@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="invoice_state_track_model" model="ir.ui.view">
+            <field name="name">Invoice State Track</field>
+            <field name="model">invoice.state.track</field>
+            <field name="arch" type="xml">
+                <form string="Invoice States">
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="status" />
+                                <field name="user_id" />
+                            </group>
+                            <group>
+                                <field name="invoice_id"/>
+                                <field name="serial" />
+
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="invoice_state_track_model_tree" model="ir.ui.view">
+            <field name="name">Invoice State Track</field>
+            <field name="model">invoice.state.track</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="name" />
+                     <field name="status" />
+                     <field name="user_id" />
+                     <field name="invoice_id" />
+                     <field name="serial" />
+
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id='invoice_state_track_model_action' model='ir.actions.act_window'>
+            <field name="name">Invoice State Track</field>
+            <field name="res_model">invoice.state.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+
+
+
+        <menuitem id="invoice_state_track_model_menuitem"
+                  name="Invoice States" action="invoice_state_track_model_action"/>
+
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,143 @@
+<odoo>
+  <data>
+    <record id="account_refund_debit_credit_inherit_form" model="ir.ui.view">
+      <field name="name">debit and credit and refund</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_form"/>
+      <field name="arch" type="xml">
+        <!-- dummy, will be modified by groups -->
+        <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="replace">
+          <button name="%(account.action_account_invoice_refund)d" type='action' string='Refund Invoice' groups="account.group_account_invoice" attrs="{'invisible': ['|',('type', '=', 'out_refund'), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+        </xpath>
+        <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="after">
+          <field name="credit" invisible="1"/>
+          <field name="debit" invisible="1"/>
+          <field name="is_refund" invisible="1"/>
+          <button name="%(act_debit_note)d" type='action' string='Add Debit Note' attrs="{'invisible': ['|',('debit', '=', True), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+          <button name="%(act_credit_note)d" type='action' string='Add Credit Note' attrs="{'invisible': ['|',('credit', '=', True), ('state', 'not in', ('open','in_payment','paid'))]}"/>
+        </xpath>
+        <xpath expr="//field[@name='team_id']" position="after">
+          <field name="refund_type" attrs="{'invisible': [('type', 'not in', ['out_refund', 'in_refund'])]}" readonly="1"/>
+        </xpath>
+        <xpath expr="//field[@name='partner_limit_days']" position="after">
+          <field name="cust_refund_no" attrs="{'invisible': [('type', '!=', 'out_refund'),('credit', '=', False)]}"/>
+        </xpath>
+        <xpath expr="//page[2]" position="after">
+          <page string="Debit Notes" attrs="{'invisible': [('debit', '=', True)]}">
+            <field name="debit_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}">
+              <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" create="false" string="Invoice">
+                <field name="partner_id" groups="base.group_user" string="Customer"/>
+                <field name="date_invoice"/>
+                <field name="number"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                <field name="user_id"/>
+                <field name="date_due"/>
+                <field name="origin"/>
+                <field name="amount_total_signed"/>
+                <field name="residual_signed"/>
+                <field name="state"/>
+              </tree>
+
+            </field>
+          </page>
+
+        </xpath>
+
+        <xpath expr="//page[2]" position="after">
+          <page string="Credit Notes" attrs="{'invisible': ['|',('type', 'in', ['in_refund','out_refund']),('credit', '=', True)]}">
+            <field name="credit_invoice_ids" context="{'form_view_ref': 'account.invoice_form'}">
+              <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" create="false" string="Invoice">
+                <field name="partner_id" groups="base.group_user" string="Customer"/>
+                <field name="date_invoice"/>
+                <field name="number"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                <field name="user_id"/>
+                <field name="date_due"/>
+                <field name="origin"/>
+                <field name="amount_total_signed"/>
+                <field name="residual_signed"/>
+                <field name="state"/>
+              </tree>
+
+            </field>
+          </page>
+
+        </xpath>
+
+        <xpath expr="//page[2]" position="after">
+          <page string="Refund">
+            <field name="refund_invoice_ids">
+              <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" create="false" string="Invoice">
+                <field name="partner_id" groups="base.group_user" string="Branch"/>
+                <field name="date_invoice" string="Bill Date"/>
+                <field name="number"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                <field name="reference"/>
+                <field name="origin"/>
+                <field name="name" string="Refund Reason"/>
+                <field name="amount_total_signed"/>
+                <field name="residual_signed"/>
+                <field name="state"/>
+              </tree>
+
+            </field>
+          </page>
+
+        </xpath>
+
+
+
+
+      </field>
+    </record>
+
+    <record id="account_journal_debit_credit_inherit_form" model="ir.ui.view">
+      <field name="name">debit and credit and refund</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_journal_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='currency_id']" position="after">
+          <field name="is_debit"/>
+          <field name="is_credit"/>
+          <field name="is_refund"/>
+        </xpath>
+      </field>
+    </record>
+
+
+    <record id="refund_type_inherit_form_view" model="ir.ui.view">
+      <field name="name">refund.type.account</field>
+      <field name="model">account.invoice.refund</field>
+      <field name="inherit_id" ref="account.view_account_invoice_refund"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='description']" position="after">
+          <field name="refund_type"/>
+          <field name="journal_id"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="payment_reciept_ref_inherit_form_view" model="ir.ui.view">
+      <field name="name">receipt.account.payment</field>
+      <field name="model">account.payment</field>
+      <field name="inherit_id" ref="account.view_account_payment_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='communication']" position="after">
+          <field name="salary_rec_number" attrs="{'invisible': [('partner_type', '!=', 'customer'),('payment_type', '!=', 'inbound')], 'required': [('partner_type', '=', 'customer')]}"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="reciept_ref_inherit_form_view" model="ir.ui.view">
+      <field name="name">receipt.account.payment</field>
+      <field name="model">account.payment</field>
+      <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='journal_id']" position="after">
+          <field name="salary_rec_number" attrs="{'invisible': [('partner_type', '!=', 'customer')], 'required': [('partner_type', '=', 'customer')]}"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>
