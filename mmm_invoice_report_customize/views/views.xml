@@ -21,14 +21,6 @@
                         />
                     </div>
                 </div>
-                <!--                <t>-->
-                <!--                    <address t-field="o.partner_id"-->
-                <!--                             t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>-->
-                <!--                    <div t-if="o.partner_id.vat" class="mt16"><t-->
-                <!--                            t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:-->
-                <!--                        <span t-field="o.partner_id.vat"/>-->
-                <!--                    </div>-->
-                <!--                </t>-->
 
                 <h2>
                     <span t-if="o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')">Invoice
@@ -40,6 +32,7 @@
                     <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
                     <span t-field="o.number"/>
                 </h2>
+
 
                 <div class="row">
                     <div class="col-auto mw-100 mb-2" t-if="o.name" name="description">
@@ -368,6 +361,7 @@
         <record id="account.account_invoices" model="ir.actions.report">
             <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/> 
         </record>
+
 
     </data>
 </odoo>
