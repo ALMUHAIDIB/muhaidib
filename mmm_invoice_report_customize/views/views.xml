@@ -366,7 +366,7 @@
             <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/>
         </record>
         <record id="account.account_invoices" model="ir.actions.report">
-            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/>
+            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/> 
         </record>
 
     </data>
