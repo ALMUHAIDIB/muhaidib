@@ -21,14 +21,6 @@
                         />
                     </div>
                 </div>
-<!--                <t>-->
-<!--                    <address t-field="o.partner_id"-->
-<!--                             t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>-->
-<!--                    <div t-if="o.partner_id.vat" class="mt16"><t-->
-<!--                            t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:-->
-<!--                        <span t-field="o.partner_id.vat"/>-->
-<!--                    </div>-->
-<!--                </t>-->
 
                 <h2>
                     <span t-if="o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')">Invoice
@@ -41,7 +33,8 @@
                     <span t-field="o.number"/>
                 </h2>
 
-                <div  class="row">
+
+                <div class="row">
                     <div class="col-auto mw-100 mb-2" t-if="o.name" name="description">
                         <strong>Description:</strong>
                         <p class="m-0" t-field="o.name"/>
@@ -137,10 +130,14 @@
             <xpath expr="//t[@t-call='web.external_layout']" position="replace">
                 <t t-call="mmm_invoice_report_customize.external_layout_custom">
                     <t t-set="o" t-value="o.with_context(lang=lang)"/>
-                <t t-set="address">
-                    <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
-                    <div t-if="o.partner_id.vat" class="mt16"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="o.partner_id.vat"/></div>
-                </t>
+                    <t t-set="address">
+                        <address t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        <div t-if="o.partner_id.vat" class="mt16"><t
+                                t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>:
+                            <span t-field="o.partner_id.vat"/>
+                        </div>
+                    </t>
 
                     <div class="page">
 
@@ -341,5 +338,30 @@
                 </t>
             </xpath>
         </template>
+
+        <record id="paperformat_sales" model="report.paperformat">
+            <field name="name">A4 Invoice</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">50</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="account.account_invoices_without_payment" model="ir.actions.report">
+            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/>
+        </record>
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/> 
+        </record>
+
+
     </data>
 </odoo>
