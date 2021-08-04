@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mmm_invoice_report_customize_mmm_invoice_report_customize,mmm_invoice_report_customize.mmm_invoice_report_customize,model_mmm_invoice_report_customize_mmm_invoice_report_customize,,1,0,0,0
