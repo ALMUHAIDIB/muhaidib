@@ -59,7 +59,7 @@
           <t t-foreach="a.invoice_line_ids" t-as="x">
             <t t-set="value_discount" t-value="value_discount+(x.quantity*x.price_unit*x.discount/100)"/>
           </t>
-          <div style="margin-right:30">
+          <div style="margin-right:15">
             <div style="position:absolute;left:88%;font-size: 18;margin-top:-6px;"> <!-- -5 -  +3 all-->
               <span style="font-size: 18;" t-esc=" '%.2f'% float(a.amount_untaxed + value_discount)"/>
             </div>
@@ -146,7 +146,7 @@
                           </td>
                           <td style="width:50px;page-break-inside: avoid;">
                             <div style="page-break-inside: avoid;position:relative;right:12">
-                              <span style="position:relative; font-size: 18;" t-esc="'%.2f'%float(i.quantity)"/>
+                              <span style="position:relative; font-size: 18;" t-esc="'%.0f'%float(i.quantity)"/>
                             </div>
                           </td>
 
@@ -237,7 +237,7 @@
           <t t-foreach="a.invoice_line_ids" t-as="x">
             <t t-set="value_discount" t-value="value_discount+(x.quantity*x.price_unit*x.discount/100)"/>
           </t>
-          <div style="margin-right:30">
+          <div style="margin-right:15">
             <div style="position:absolute;left:88%;font-size: 18;margin-top:-6px;"> <!-- -5 -  +3 all-->
               <span style="font-size: 18;" t-esc=" '%.2f'% float(a.amount_untaxed + value_discount)"/>
             </div>
@@ -254,8 +254,8 @@
               <span style="font-size: 18;" >15%</span>
             </div>
 
-            <div style="position:absolute;left:40%;margin-top:28px">
-              <t t-call="web.internal_layout"/>
+            <div style="position:absolute;left:30%;margin-top:10px">
+<!--              <t t-call="web.internal_layout"/>-->
               <img t-att-src="'/report/barcode/?type=%s&amp;width=%s&amp;height=%s&amp;value=اسم المورد: %s\n الرقم الضريبي : %s\n إجمالى الفاتورة : %s\n قيمه الضريبه : %s\n تاريخ الفاتورة : %s\n رقم الفاتورة : %s'%('QR', 130, 130,a.company_id.name,a.company_id.vat,a.amount_total,a.amount_tax,a.date_invoice,a.number)"/>
             </div>
 
@@ -324,7 +324,7 @@
                           </td>
                           <td style="width:50px;page-break-inside: avoid;">
                             <div style="page-break-inside: avoid;position:relative;right:12">
-                              <span style="position:relative; font-size: 18;" t-esc="'%.2f'%float(i.quantity)"/>
+                              <span style="position:relative; font-size: 18;" t-esc="'%.0f'%float(i.quantity)"/>
                             </div>
                           </td>
 
@@ -369,7 +369,7 @@
       <field name="margin_top">84</field>
       <field name="margin_bottom">60</field>
       <field name="margin_left">0</field>
-      <field name="margin_right">4</field>
+      <field name="margin_right">0</field>
       <field name="header_line" eval="False"/>
       <field name="header_spacing">110</field>
       <field name="dpi">90</field>
