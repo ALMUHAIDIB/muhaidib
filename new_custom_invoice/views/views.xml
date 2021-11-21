@@ -53,6 +53,7 @@
       </t>
 
       <div class="footer">
+        <div class="row">
         <t t-foreach="docs" t-as="a">
           <t t-set="value_discount" t-value="0"/>
           <t t-foreach="a.invoice_line_ids" t-as="x">
@@ -74,8 +75,15 @@
             <div style="position:absolute;left:69%;margin-top:77px">
               <span style="font-size: 18;" >15%</span>
             </div>
-             <!--mara added-->
-            
+
+            <div style="position:absolute;left:40%;margin-top:28px">
+              <t t-call="web.internal_layout"/>
+              <img t-att-src="'/report/barcode/?type=%s&amp;width=%s&amp;height=%s&amp;value=اسم المورد: %s\n الرقم الضريبي : %s\n إجمالى الفاتورة : %s\n قيمه الضريبه : %s\n تاريخ الفاتورة : %s\n رقم الفاتورة : %s'%('QR', 130, 130,a.company_id.name,a.company_id.vat,a.amount_total,a.amount_tax,a.date_invoice,a.number)"/>
+            </div>
+
+
+
+
             <div style="position:absolute;left:88%;margin-top:78px">
               <span style="font-size: 18;" t-esc="'%.2f'%float(a.amount_tax)"/>
             </div>
@@ -88,7 +96,6 @@
               <span style="font-size: 14;" t-field="a.user_id"/>
             </div>
           </div>
-
           <div class="col-xs-2 pull-left" style="margin-top:75px;position:absolute;left:5%">
             <small>
               <span>Page</span>
@@ -101,70 +108,72 @@
             <!--<span style="font-size: 14;" t-esc="a.amount_to_text(a.amount_total, 'Riyal')"/>-->
             <!--<span style="font-size: 14;" t-esc="a.amount_to_text(a.amount_total)"/>--> <!--was the last one working and stopped it,omara-->
           </div>
-
-
         </t>
+
+        </div>
       </div>
       <t t-call="web.html_container">
-        <t t-foreach="docs" t-as="a">
-          <div class="page">
-
-            <div class="row">
-              <div class="col-xs-12">
-                <table style="width:100%;">
-                  <t t-foreach="a.invoice_line_ids" t-as="i">
-                    <div class="col-xs-6" style="position:absolute;page-break-inside:avoid">
-                      <tr style="page-break-inside: avoid;">
-                        <td style="page-break-inside: avoid;text-align: center;width:163px;page-break-inside: avoid;">
-                          <t t-if="i.partner_sku">
-                            <div style="page-break-inside: avoid;position:relative; right:17;">
-                              <span style="font-size: 14;" t-field="i.partner_sku"/>
+        <t t-call="web.internal_layout">
+          <t t-foreach="docs" t-as="a">
+            <div class="page">
+              <div class="row">
+                <div class="col-xs-12">
+                  <table style="width:100%;">
+                    <t t-foreach="a.invoice_line_ids" t-as="i">
+                      <div class="col-xs-6" style="position:absolute;page-break-inside:avoid">
+                        <tr style="page-break-inside: avoid;">
+                          <td style="page-break-inside: avoid;text-align: center;width:163px;page-break-inside: avoid;">
+                            <t t-if="i.partner_sku">
+                              <div style="page-break-inside: avoid;position:relative; right:17;">
+                                <span style="font-size: 14;" t-field="i.partner_sku"/>
+                              </div>
+                            </t>
+                            <div style="page-break-inside: avoid;position:relative; right:10;"> <!--22-->
+                              <span style="font-size: 14;" t-field="i.product_id.barcode"/>
                             </div>
-                          </t>
-                          <div style="page-break-inside: avoid;position:relative; right:10;"> <!--22-->
-                            <span style="font-size: 14;" t-field="i.product_id.barcode"/>
-                          </div>
-                        </td>
-                        <td style="text-align: center;width:100px; page-break-inside: avoid;">
-                          <div style="page-break-inside: avoid;position:relative; right: 12;"> <!--22-->
-                            <span style="font-size: 16;" t-field="i.product_id.default_code"/>
-                          </div>
-                        </td>
-                        <td style="text-align: center;width:320px;page-break-inside: avoid;">
-                          <div style="position:relative;right:12;width:310px;">
-                            <span style="font-size: 18;" t-field="i.product_id.name"/>
-                            <br/>
-                            <span style="font-size: 18;" t-field="i.product_id.product_tmpl_id.ar_name"/>
-                          </div>
-                        </td>
-                        <td style="width:50px;page-break-inside: avoid;">
-                          <div style="page-break-inside: avoid;position:relative;right:12">
-                            <span style="position:relative; font-size: 18;" t-esc="'%.2f'%float(i.quantity)"/>
-                          </div>
-                        </td>
+                          </td>
+                          <td style="text-align: center;width:100px; page-break-inside: avoid;">
+                            <div style="page-break-inside: avoid;position:relative; right: 12;"> <!--22-->
+                              <span style="font-size: 16;" t-field="i.product_id.default_code"/>
+                            </div>
+                          </td>
+                          <td style="text-align: center;width:320px;page-break-inside: avoid;">
+                            <div style="position:relative;right:12;width:310px;">
+                              <span style="font-size: 18;" t-field="i.product_id.name"/>
+                              <br/>
+                              <span style="font-size: 18;" t-field="i.product_id.product_tmpl_id.ar_name"/>
+                            </div>
+                          </td>
+                          <td style="width:50px;page-break-inside: avoid;">
+                            <div style="page-break-inside: avoid;position:relative;right:12">
+                              <span style="position:relative; font-size: 18;" t-esc="'%.2f'%float(i.quantity)"/>
+                            </div>
+                          </td>
 
-                        <td style="text-align: center;width:100px;page-break-inside: avoid;">
-                          <span style="position:relative; right: 22; width:50px;font-size: 18;" t-field="i.uom_id"/>
-                        </td>
-                        <td style="text-align: center;width:50px;page-break-inside: avoid;">
-                          <span style="position:relative; right: 17; width:50px; font-size: 18;" t-esc="'%.2f'%float(i.price_unit)"/>
-                        </td>
-                        <td style="text-align: center;width:100px;page-break-inside: avoid;">
-                          <span style="position:relative; width:100px;font-size: 18;right:12" t-esc="'%.2f'%float(i.discount)"/>
-                        </td>
-                        <td style="text-align: center;width:100px;page-break-inside: avoid;">
-                          <span style="position:relative;  width:100px;font-size: 18;right:17" t-esc="'%.2f'%float(i.price_subtotal)"/>
-                        </td>
-                      </tr>
-                    </div>
-                  </t>
-                </table>
+                          <td style="text-align: center;width:100px;page-break-inside: avoid;">
+                            <span style="position:relative; right: 22; width:50px;font-size: 18;" t-field="i.uom_id"/>
+                          </td>
+                          <td style="text-align: center;width:50px;page-break-inside: avoid;">
+                            <span style="position:relative; right: 17; width:50px; font-size: 18;" t-esc="'%.2f'%float(i.price_unit)"/>
+                          </td>
+                          <td style="text-align: center;width:100px;page-break-inside: avoid;">
+                            <span style="position:relative; width:100px;font-size: 18;right:12" t-esc="'%.2f'%float(i.discount)"/>
+                          </td>
+                          <td style="text-align: center;width:100px;page-break-inside: avoid;">
+                            <span style="position:relative;  width:100px;font-size: 18;right:17" t-esc="'%.2f'%float(i.price_subtotal)"/>
+                          </td>
+                        </tr>
+                      </div>
+                    </t>
+                  </table>
 
+                </div>
               </div>
-            </div>
+
           </div>
         </t>
       </t>
+    </t>
       <!--TODO MM1 Invoice paper Format A4 And printed => 'Letter invoice && check to fit to page'-->
 
 

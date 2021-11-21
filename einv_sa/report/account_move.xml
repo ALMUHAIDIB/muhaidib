@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-3">
 
-                    <img t-att-src="'/report/barcode/?type=%s&amp;width=%s&amp;height=%s&amp;value=Seller : %s;Vat_Number : %s;date : %s;Total_Vat : %s;Total_Amount : %s'%('QR', 130, 130,doc.company_id.name,doc.company_id.vat,doc.date_invoice,doc.amount_tax_signed,doc.amount_total)"
+                    <img t-att-src="'/report/barcode/?type=%s&amp;width=%s&amp;height=%s&amp;value=اسم المورد: %s\n الرقم الضريبي : %s\n إجمالى الفاتورة : %s\n قيمه الضريبه : %s\n تاريخ الفاتورة : %s\n رقم الفاتورة : %s'%('QR', 130, 130,doc.company_id.name,doc.company_id.vat,doc.amount_total,doc.amount_tax,doc.date_invoice,doc.number)"
                          class="float-right my-1"/>
 
                 </div>
