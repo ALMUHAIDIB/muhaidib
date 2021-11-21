@@ -254,7 +254,7 @@
               <span style="font-size: 18;" >15%</span>
             </div>
 
-            <div style="position:absolute;left:30%;margin-top:10px">
+            <div style="position:absolute;left:50%;margin-top:10px">
 <!--              <t t-call="web.internal_layout"/>-->
               <img t-att-src="'/report/barcode/?type=%s&amp;width=%s&amp;height=%s&amp;value=اسم المورد: %s\n الرقم الضريبي : %s\n إجمالى الفاتورة : %s\n قيمه الضريبه : %s\n تاريخ الفاتورة : %s\n رقم الفاتورة : %s'%('QR', 130, 130,a.company_id.name,a.company_id.vat,a.amount_total,a.amount_tax,a.date_invoice,a.number)"/>
             </div>
