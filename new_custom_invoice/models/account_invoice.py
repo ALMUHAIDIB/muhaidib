@@ -1,60 +1,51 @@
 # -*- coding: utf-8 -*-
+import base64
 
 from odoo import models, fields, api
-from odoo.http import request
-# from odoo.addons.ehcs_qr_code_base.models.qr_code_base import generate_qr_code
-
-import qrcode
-import base64
-from io import BytesIO
-
-
-def generate_qr_code(url):
-    qr = qrcode.QRCode(
-             version=1,
-             error_correction=qrcode.constants.ERROR_CORRECT_M,
-             box_size=20,
-             border=4,
-             )
-    qr.add_data(url)
-    qr.make(fit=True)
-    img = qr.make_image()
-    temp = BytesIO()
-    img.save(temp, format="PNG")
-    qr_img = base64.b64encode(temp.getvalue())
-    return qr_img
 
 
 class AccountInvoiceInherit(models.Model):
     _inherit = 'account.invoice'
 
-    qr_image = fields.Binary("QR Code", compute='_generate_qr_code')
-    qr_in_report = fields.Boolean('Show QR in Report')
-    qr_value = fields.Char(string='QR Value', compute='get_qr_code_value', store=True)
+    l10n_sa_delivery_date = fields.Date(string='Delivery Date', default=fields.Date.context_today, copy=False)
+    l10n_sa_show_delivery_date = fields.Boolean(compute='_compute_show_delivery_date')
+    l10n_sa_qr_code_str = fields.Char(string='Zatka QR Code', compute='_compute_qr_code_str')
+    l10n_sa_confirmation_datetime = fields.Datetime(string='Confirmation Date', copy=False, readonly=True,
+                                                    default=fields.Datetime.now())
 
-    @api.multi
-    # @api.depends('company_id')
-    def get_qr_code_value(self):
-        for rec in self:
-            qr_value = request.env['ir.config_parameter'].get_param('web.base.url')
-            # qr_value = '%s\n %s\n %s\n ' % (rec.company_id.name, rec.company_id.vat, rec.amount_total)
-            # qr_value = ''
-            if rec.company_id:
-                qr_value += 'اسم المورد:' + '%s' % rec.company_id.name
-                # qr_value += 'الرقم الضريبي:' + '%s' % rec.company_id.vat
-            # if rec.amount_total:
-            #     qr_value += 'إجمالى الفاتورة: %s\n' % rec.amount_total
-            # if rec.amount_tax:
-            #     qr_value += 'قيمه الضريبه: %s\n' % rec.amount_tax
-            # if rec.date_invoice:
-            #     qr_value += 'تاريخ الفاتورة: %s\n' % rec.date_invoice
-            # if rec.number:
-            #     qr_value += 'رقم الفاتورة: %s\n' % rec.number
-            return qr_value
+    @api.depends('company_id.country_id.code', 'type')
+    def _compute_show_delivery_date(self):
+        for move in self:
+            move.l10n_sa_show_delivery_date = move.company_id.country_id.code == 'SA' and \
+                                              move.type in ('out_invoice', 'out_refund')
 
-    @api.one
-    def _generate_qr_code(self):
-        self.qr_image = generate_qr_code(self.get_qr_code_value())
+    @api.depends('amount_total', 'amount_untaxed', 'l10n_sa_confirmation_datetime', 'company_id', 'company_id.vat')
+    def _compute_qr_code_str(self):
+        """ Generate the qr code for Saudi e-invoicing. Specs are available at the following link at page 23
+        https://zatca.gov.sa/ar/E-Invoicing/SystemsDevelopers/Documents/20210528_ZATCA_Electronic_Invoice_Security_Features_Implementation_Standards_vShared.pdf
+        """
+
+        def get_qr_encoding(tag, field):
+            company_name_byte_array = field.encode('UTF-8')
+            company_name_tag_encoding = tag.to_bytes(length=1, byteorder='big')
+            company_name_length_encoding = len(company_name_byte_array).to_bytes(length=1, byteorder='big')
+            return company_name_tag_encoding + company_name_length_encoding + company_name_byte_array
+
+        for record in self:
+            qr_code_str = ''
+            if record.l10n_sa_confirmation_datetime and record.company_id.vat:
+                seller_name_enc = get_qr_encoding(1, record.company_id.display_name)
+                company_vat_enc = get_qr_encoding(2, record.company_id.vat)
+                time_sa = fields.Datetime.context_timestamp(self.with_context(tz='Asia/Riyadh'),
+                                                            record.l10n_sa_confirmation_datetime)
+                timestamp_enc = get_qr_encoding(3, time_sa.isoformat())
+                invoice_total_enc = get_qr_encoding(4, str(record.amount_total))
+                total_vat_enc = get_qr_encoding(5, str(record.currency_id.round(
+                    record.amount_total - record.amount_untaxed)))
+
+                str_to_encode = seller_name_enc + company_vat_enc + timestamp_enc + invoice_total_enc + total_vat_enc
+                qr_code_str = base64.b64encode(str_to_encode).decode('UTF-8')
+            record.l10n_sa_qr_code_str = qr_code_str
 
     @api.depends('origin')
     def compute_sale_picking_ids(self):
