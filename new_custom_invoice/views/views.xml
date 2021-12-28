@@ -1,5 +1,14 @@
 <odoo>
   <data>
+    <template id="report_invoice_document_qr_code" inherit_id="account.report_invoice_document">
+      <xpath expr="//div[2]" position="after">
+        <div>
+          <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 150, 150)"/>
+        </div>
+      </xpath>
+
+    </template>
+
     <template id="custom_invoice_template">
       <t t-foreach="docs" t-as="a">
         <div class="header">
