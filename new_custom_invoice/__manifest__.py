@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'account', 'stock', 'product', 'sale', 'web'],
+    'depends': ['base', 'account', 'stock', 'product', 'sale', 'web', 'mmm_invoice_report_customize'],
 
     # always loaded
     'data': [
