@@ -1,5 +1,16 @@
 <odoo>
     <data>
+        <record id="account_inherit_form_view" model="ir.ui.view">
+            <field name="name">partner.invoice_line</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="grn"/>
+                </xpath>
+            </field>
+        </record>
+
         <template id="external_layout_standard">
             <div class="header" t-att-style="report_header_style">
                 <div class="row">
@@ -43,6 +54,10 @@
                         <strong>Invoice Date:</strong>
                         <p class="m-0" t-field="o.date_invoice"/>
                     </div>
+                    <div class="col-auto mw-100" t-if="o.date_invoice" name="invoice_date">
+                        <strong>GRN:</strong>
+                        <p class="m-0" t-field="o.grn"/>
+                    </div>
                     <div class="col-auto mw-100"
                          t-if="o.date_due and o.type == 'out_invoice' and o.state in ('open', 'in_payment', 'paid')"
                          name="due_date">
@@ -75,12 +90,12 @@
             <div class="footer o_standard_footer">
                 <div class="text-center" style="border-top: 1px solid black;">
                     <ul class="list-inline mb4">
-<!--                        <li t-if="company.phone" class="list-inline-item">Phone:-->
-<!--                            <span t-field="company.phone"/>-->
-<!--                        </li>-->
-<!--                        <li t-if="company.email" class="list-inline-item">Email:-->
-<!--                            <span t-field="company.email"/>-->
-<!--                        </li>-->
+                        <!--                        <li t-if="company.phone" class="list-inline-item">Phone:-->
+                        <!--                            <span t-field="company.phone"/>-->
+                        <!--                        </li>-->
+                        <!--                        <li t-if="company.email" class="list-inline-item">Email:-->
+                        <!--                            <span t-field="company.email"/>-->
+                        <!--                        </li>-->
                         <li t-if="company.street" class="list-inline-item">Address:
                             <span t-field="company.street"/>
                         </li>
@@ -371,7 +386,7 @@
             <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/>
         </record>
         <record id="account.account_invoices" model="ir.actions.report">
-            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/> 
+            <field name="paperformat_id" ref="mmm_invoice_report_customize.paperformat_sales"/>
         </record>
 
 
