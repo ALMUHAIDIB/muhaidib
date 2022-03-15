@@ -1,0 +1,159 @@
+<odoo>
+    <data>
+
+        <record id="paperformat_delivery_note_report" model="report.paperformat">
+            <field name="name">Delivery Note Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="delivery_note_report"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                string="Delivery Note Report"
+                name="mm_delivery_note_report.delivery_note_report_template"
+                file="mm_delivery_note_report.talabat_mart_report_template"
+                paperformat="paperformat_delivery_note_report"
+        />
+
+        <template id="delivery_note_print_out">
+            <t t-call="web.internal_layout">
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Amiri&amp;display=swap');
+                </style>
+                <div class="text-center">
+                    <img class="img-fluid about_team_img" src="/mm_delivery_note_report/static/src/img/WhatsApp Image 2022-03-15 at 7.33.46 PM.jpeg"/>
+                </div>
+
+                <br/>
+
+                <div class="text-center" style="font-weight:bold; font-family: 'Amiri', serif; font-size:25px;">
+                    DELIVERY NOTE (اشعار تسليم بضاعة)
+                    <t t-esc="o.name"/>
+                </div>
+
+                <br/>
+
+                <table class="text-center" style="font-family: 'Amiri', serif; width:100%; font-size:25px;">
+                    <tr>
+                        <th>
+                            CUSTOMER:
+                            <t t-esc="o.sale_id.parent_partner_id.name"/>
+                        </th>
+                        <th>
+                            VENDOR NO: 69875
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            BRANCH:
+                            <t t-esc="o.partner_id.name"/>
+                        </th>
+                        <th>
+                            VENDOR NAME: ALMUHAIDIB FIRST MISSION
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            PO NO:
+                            <t t-esc="o.sale_id.client_order_ref"/>
+                        </th>
+                    </tr>
+                </table>
+
+                <br/>
+
+                <table style="font-family: 'Amiri', serif; width:100%; border:1px solid;">
+                    <tr style="border:1px solid; font-size:20px;">
+                        <th style="border:1px solid; text-align:center;">
+                            ITEM NO
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            PANDA SKU NO
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            DESCRIPTION
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            QTY
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            UNIT
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            UNIT PRICE
+                        </th>
+                        <th style="border:1px solid; text-align:center;">
+                            TOTAL
+                        </th>
+                    </tr>
+                    <t t-set="total" t-value="0.0"/>
+                    <t t-foreach="o.move_ids_without_package" t-as="l">
+                        <t t-set="total" t-value="l.product_uom_qty + l.product_id.lst_price"/>
+                        <tr style="font-size:20px;">
+                            <td style="border:1px solid; text-align:center; width:110px;">
+                                <t t-esc="l.product_id.default_code"/>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <p t-if="o.partner_id.customer_product_sku.name==l.product_id">
+                                    <t t-esc="o.partner_id.customer_product_sku.product_sku"/>
+                                </p>
+                                <p t-else="">
+                                    <span></span>
+                                </p>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <t t-esc="l.product_id.name"/>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <t t-esc="l.product_uom_qty"/>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <t t-esc="l.product_uom.name"/>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <t t-esc="l.product_id.lst_price"/>
+                            </td>
+                            <td style="border:1px solid; text-align:center;">
+                                <t t-esc="total"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+
+                <br/>
+                <br/>
+
+                <div class="text-right" dir="rtl"
+                     style="font-family: 'Amiri', serif; font-size:25px; padding-right:20px">
+                    توقيع المستودع
+                </div>
+
+            </t>
+        </template>
+
+        <template id="delivery_note_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div style="border: 1px solid black;">
+                        <div class="page">
+                            <t t-call="mm_delivery_note_report.delivery_note_print_out"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
