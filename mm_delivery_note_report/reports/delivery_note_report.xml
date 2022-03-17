@@ -138,7 +138,6 @@
                     <t t-set="total" t-value="0"/>
                     <t t-set="total_amount" t-value="0"/>
                     <t t-foreach="o.move_ids_without_package" t-as="l">
-                        <t t-set="total" t-value="l.product_uom_qty * l.product_id.lst_price"/>
                         <tr style="font-size:20px;">
                             <td style="border:1px solid; text-align:center; width:110px;">
                                 <t t-esc="l.product_id.default_code"/>
@@ -163,11 +162,26 @@
                                 <t t-esc="l.product_uom.name"/>
                             </td>
                             <td style="border:1px solid; text-align:center;">
-                                <t t-esc="l.product_id.lst_price"/>
+                                <t t-foreach="o.sale_id.order_line" t-as="s">
+                                    <p t-if="l.product_id.id==s.product_id.id">
+                                        <t t-esc="s.price_unit"/>
+                                    </p>
+                                    <p t-else="">
+                                        <span></span>
+                                    </p>
+                                </t>
                             </td>
                             <td style="border:1px solid; text-align:center;">
-                                <t t-esc="total"/>
-                                <t t-set="total_amount" t-value="total_amount+total"/>
+                                <t t-foreach="o.sale_id.order_line" t-as="s">
+                                    <t t-set="total" t-value="l.product_uom_qty * s.price_unit"/>
+                                    <p t-if="l.product_id.id==s.product_id.id">
+                                        <t t-esc="total"/>
+                                        <t t-set="total_amount" t-value="total_amount+total"/>
+                                    </p>
+                                    <p t-else="">
+                                        <span></span>
+                                    </p>
+                                </t>
                             </td>
                         </tr>
                     </t>
