@@ -138,7 +138,7 @@
                     <t t-set="total" t-value="0"/>
                     <t t-set="total_amount" t-value="0"/>
                     <t t-foreach="o.move_ids_without_package" t-as="l">
-                        <t t-set="total" t-value="l.product_uom_qty + l.product_id.lst_price"/>
+                        <t t-set="total" t-value="l.product_uom_qty * l.product_id.lst_price"/>
                         <tr style="font-size:20px;">
                             <td style="border:1px solid; text-align:center; width:110px;">
                                 <t t-esc="l.product_id.default_code"/>
