@@ -8,21 +8,25 @@
 #
 ##############################################################################
 
-from odoo import api, models, fields
+from odoo import api, models, fields, _
+from datetime import timedelta, date
+
 
 class sale_order(models.Model):
-    _inherit= 'sale.order'
+    _inherit = 'sale.order'
 
     exceeded_amount = fields.Float('Exceeded Amount')
-
+    is_over_due = fields.Boolean(string="Over Due", copy=False)
     state = fields.Selection([
         ('draft', 'Quotation'),
         ('sent', 'Quotation Sent'),
+        ('over_due', 'Over Due'),
         ('credit_limit', 'Credit limit'),
         ('sale', 'Sales Order'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
-    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3, default='draft')
+    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', track_sequence=3,
+        default='draft')
 
     # @api.multi
     # @api.onchange('partner_id')
@@ -35,15 +39,49 @@ class sale_order(models.Model):
     #                         {'title': 'Credit Limit On Hold', 'message': msg
     #                          }
     #                     }
+    @api.multi
+    def check_balance(self):
+        for rec in self:
+            new_date = rec.date_order.date() - timedelta(days=rec.company_id.allowed_days)
+            print("new_date >> ", new_date)
+            amount_residual = self.env['account.move.line'].search([
+                ('partner_id', '=', rec.parent_partner_id.id),
+                ('account_id', '=', rec.partner_id.property_account_receivable_id.id),
+                ('date_maturity', '<=', new_date)]).mapped('amount_residual')
+            print("amount_residual >> ", amount_residual)
+            total_residual = sum(amount_residual)
+            print("total_residual >> ", total_residual)
+            if total_residual > 0:
+                imd = self.env['ir.model.data']
+                text = _('This Customer Has Outstanding Amount For More Than %s Days, With Amount Of %s') % (str(rec.company_id.allowed_days), str(total_residual))
+                vals_wiz = {
+                    'sale_id': rec.id,
+                    'text': text,
+                }
+                wiz_id = self.env['over.due.wizard'].create(vals_wiz)
+                action = imd.xmlid_to_object('dev_customer_credit_limit.action_over_due_wizard')
+                form_view_id = imd.xmlid_to_res_id('dev_customer_credit_limit.view_over_due_wizard_form')
+                return {
+                    'name': action.name,
+                    'type': action.type,
+                    'views': [(form_view_id, 'form')],
+                    'view_id': form_view_id,
+                    'target': action.target,
+                    'context': action.context,
+                    'res_model': action.res_model,
+                    'res_id': wiz_id.id,
+                }
+            else:
+                rec.is_over_due = True
 
     @api.multi
     @api.onchange('parent_partner_id')
     def parent_partner_id_onchange(self):
-        domain = super(sale_order,self).parent_partner_id_onchange()
+        domain = super(sale_order, self).parent_partner_id_onchange()
         if self.parent_partner_id:
             if self.parent_partner_id.credit_limit_on_hold:
                 msg = "Customer '" + self.parent_partner_id.name + "' is on credit limit hold."
-                return {'domain':domain['domain'] if domain != None else [],
+                return {'domain': domain['domain'] if domain != None else [],
                         'warning':
                             {'title': 'Credit Limit On Hold', 'message': msg
                              }
@@ -145,9 +183,8 @@ class sale_order(models.Model):
             self.action_confirm()
         return True
 
-
     @api.multi
-    def _make_url(self,model='sale.order'):
+    def _make_url(self, model='sale.order'):
         ir_param = self.env['ir.config_parameter'].sudo()
         base_url = ir_param.get_param('web.base.url', default='http://localhost:8069')
         if base_url:
@@ -165,12 +202,12 @@ class sale_order(models.Model):
             partner = user.partner_id
             body = '''
                         <b>Dear ''' " %s</b>," % (partner.name) + '''
-                        <p> A Sale Order ''' "<b><i>%s</i></b>" % self.name + '''  for customer ''' "<b><i>%s</i></b>" % self.partner_id.name +''' require your Credit Limit Approval.</p> 
+                        <p> A Sale Order ''' "<b><i>%s</i></b>" % self.name + '''  for customer ''' "<b><i>%s</i></b>" % self.partner_id.name + ''' require your Credit Limit Approval.</p> 
                         <p>You can access sale order from  below url <br/>
-                        ''' "%s" % url +''' </p> 
+                        ''' "%s" % url + ''' </p> 
                         
                         <p><b>Regards,</b> <br/>
-                        ''' "<b><i>%s</i></b>" % self.user_id.name +''' </p> 
+                        ''' "<b><i>%s</i></b>" % self.user_id.name + ''' </p> 
                         '''
 
             mail_values = {
@@ -181,7 +218,7 @@ class sale_order(models.Model):
                 'state': 'outgoing',
                 'type': 'email',
             }
-            mail_id =self.env['mail.mail'].create(mail_values)
+            mail_id = self.env['mail.mail'].create(mail_values)
             mail_id.send(True)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
