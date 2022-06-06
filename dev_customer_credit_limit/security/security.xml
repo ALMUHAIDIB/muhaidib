@@ -9,4 +9,9 @@ For Module Support : devintelle@gmail.com  or Skype : devintelle
         <field name="name">Config Credit Limit On partners</field>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
     </record>
+
+    <record id="credit_limit_manager" model="res.groups">
+        <field name="name">Credit Limit Manager</field>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
 </odoo>

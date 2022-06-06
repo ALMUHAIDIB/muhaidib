@@ -51,8 +51,10 @@
     'data': [
         'security/security.xml',
         'wizard/customer_limit_wizard_view.xml',
+        'wizard/over_due_wizard_view.xml',
         'views/partner_view.xml',
         'views/sale_order_view.xml',
+        'views/config_view.xml',
     ],
     'demo': [],
     'test': [],
