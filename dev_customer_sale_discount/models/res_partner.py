@@ -11,15 +11,8 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, AccessError
 
+
 class res_partner(models.Model):
     _inherit = 'res.partner'
-            
-    
-    discount = fields.Float(string='Discount')
-    
-       
-    
-    
 
-
-       
+    discount = fields.Float(string='Discount', company_dependent=True)
