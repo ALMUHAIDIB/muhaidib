@@ -17,7 +17,7 @@ class res_partner(models.Model):
     credit_limit_on_hold  = fields.Boolean('Credit limit on hold')
     credit_limit = fields.Float('Credit Limit', company_dependent=True)
     user_id = fields.Many2one('res.users', string='Salesperson',
-      help='The internal user in charge of this contact.', company_dependent=True)
+      help='The internal user in charge of this contact.', company_dependent=True, store=True)
 
 
 
